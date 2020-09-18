@@ -5,16 +5,18 @@ namespace Zork
 {
     class Program
     {
-        private static string[] Rooms = 
+        private static string[,] Rooms = 
         {
-            "Forest", "West of House", "Behind House", "Clearing", "Canyon View"
+            { "Rocky Trail", "South of House", "Canyon View" },
+            { "Forest", "West of House", "Behind House" },
+            { "Dense Woods", "North of House", "Clearing" }
         };
 
         private static string CurrentRoom
         {
             get
             {
-                return Rooms[Location.Column];
+                return Rooms[Location.Row, Location.Column];
             }
         }
 
@@ -29,15 +31,17 @@ namespace Zork
                 Console.Write("> ");
                 command = ToCommand(Console.ReadLine().Trim());
 
-                string outputString;
+                //string outputString;
                 switch (command)
                 {
                     case Commands.QUIT:
-                        outputString = "Thank you for playing!";
+                        //outputString = "Thank you for playing!";
+                        Console.WriteLine("Thank you for playing!");
                         break;
 
                     case Commands.LOOK:
-                        outputString = "This is an open field west of a white house, with a boarded front door. \nA rubber mat saying 'Welcome to Zork!' lies by the door.";
+                        //outputString = "This is an open field west of a white house, with a boarded front door. \nA rubber mat saying 'Welcome to Zork!' lies by the door.";
+                        Console.WriteLine("A rubber mat saying 'Welcome to Zork!' lies by the door.");
                         break;
 
                     case Commands.NORTH:
@@ -49,15 +53,20 @@ namespace Zork
                             Console.WriteLine("The way is shut!");
                             continue;
                         }
-                        outputString = $"You moved {command}.";
+                        //outputString = $"You moved {command}.";
+
+                        //Tried removing the above line to match Zork 2.2 output,
+                        //but it broke the rest of the outputStrings for some reason.
+                        //Replaced all outputString with Console.Writelines.
                         break;
 
                     default:
-                        outputString = "Unknown command.";
+                        //outputString = "Unknown command.";
+                        Console.WriteLine("Unknown command.");
                         break;
                 }
 
-                Console.WriteLine(outputString);
+                //Console.WriteLine(outputString);
             }
         }
 
@@ -67,9 +76,11 @@ namespace Zork
 
             switch (command)
             {
-                case Commands.NORTH:
-                case Commands.SOUTH:
-                    moveSuccessful = false;
+                case Commands.NORTH when Location.Row < Rooms.GetLength(0) - 1:
+                    Location.Row++;
+                    break;
+                case Commands.SOUTH when Location.Row > 0:
+                    Location.Row--;
                     break;
                 case Commands.EAST when Location.Column < Rooms.GetLength(0) - 1:
                     Location.Column++;
@@ -88,6 +99,6 @@ namespace Zork
 
         private static Commands ToCommand(string commandString) => Enum.TryParse<Commands>(commandString, true, out Commands result) ? result : Commands.UNKNOWN;
 
-        private static (int Column, int Row) Location = (1,0);
+        private static (int Row, int Column) Location = (1,1); //sets the current location to West of House and feeds it to CurrentRoom
     }
 }
