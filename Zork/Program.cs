@@ -14,8 +14,6 @@ namespace Zork
             }
         }
 
-
-
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Zork!");
@@ -99,9 +97,9 @@ namespace Zork
 
         private static readonly Room[,] Rooms =
         {
-            { new Room("Dense Woods"), new Room("North of House"), new Room("Clearing") },
+            { new Room("Rocky Trail"), new Room("South of House"), new Room("Canyon View") },
             { new Room("Forest"), new Room("West of House"), new Room("Behind House") },
-            { new Room("Rocky Trail"), new Room("South of House"), new Room("Canyon View") }
+            { new Room("Dense Woods"), new Room("North of House"), new Room("Clearing") }
         };
 
         private static void InitializeRoomDescriptions()
