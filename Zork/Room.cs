@@ -8,21 +8,6 @@ namespace Zork
 {
     public class Room : IEquatable<Room>
     {
-        //[JsonIgnore]
-        //public IReadOnlyDictionary<Directions, Room> Neighbors { get; private set; }
-
-        //public override int GetHashCode() => Name.GetHashCode();
-        //public override string ToString() => Name;
-        //public string Name { get; }
-
-        //public string Description { get; set; }
-
-        //public Room(string name, string description = "")
-        //{
-        //    Name = name;
-        //    Description = description;
-        //}
-
         [JsonProperty(Order = 1)]
         public string Name { get; private set; }
 
